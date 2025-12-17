@@ -1,0 +1,31 @@
+{
+  "name": "food-ordering-app",
+  "version": "1.0.0",
+  "description": "food-ordering-app",
+  
+  "scripts": {
+    "start":"parcel index.html",
+    "build":"parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omkarmagadumdev/food-ordering-app.git"
+  },
+  "keywords": [
+    "omkar"
+  ],
+  "author": "omkar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omkarmagadumdev/food-ordering-app/issues"
+  },
+  "homepage": "https://github.com/omkarmagadumdev/food-ordering-app#readme",
+  "devDependencies": {
+    "parcel": "^2.16.3"
+  },
+  "dependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  }
+}

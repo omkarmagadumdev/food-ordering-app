@@ -6,6 +6,8 @@
   "scripts": {
     "start":"parcel index.html",
     "build":"parcel build index.html",
+    "clean": "Remove-Item -Path '.parcel-cache', 'dist' -Recurse -Force -ErrorAction SilentlyContinue",
+    "dev": "npm run clean && npm start",
     "test": "jest"
   },
   "repository": {

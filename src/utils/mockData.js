@@ -1,31 +1,4 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-
-// Simple card: pass plain props like title, cuisines, avgRating, time
-const RestaurantCard = (props) => {
-  return (
-    <div className="restaurent-card" style={{ backgroundColor: "#f0f0f0" }}>
-      <img
-        className="cardimg"
-        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/e0vvulfbahjxjz6k4uwi"
-        alt=""
-      />
-      <div className="cardcontent">
-        <div className="cuisin">
-          <h3>{props.title}</h3>
-          <h4>{props.cuisines}</h4>
-        </div>
-        <div className="meta">
-          <span className="rating">⭐ {props.avgRating}</span>
-          <span className="dot">•</span>
-          <span className="time">{props.time}</span>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const resObj = {
+const resList = {
 "statusCode": 0,
 "data": {
 "statusMessage": "done successfully",
@@ -919,63 +892,4 @@ const resObj = {
 "csrfToken": "mkm4ZN8YAy83-iw9bNbhiBf0ZFyiQsnt5nszOqwI"
 }
 
-const Header = () => {
-  return (
-    <div className="header">
-      <div className="logo-container">
-        <img
-          id="logo"
-          src="https://media.istockphoto.com/id/1289190483/vector/food-fast-delivery-brand-logo-concept-for-restaurant-catering-service-company-express-cafe.jpg?s=612x612&w=0&k=20&c=ILIc_Mo8QgbfEDEb8E-n4wFhaDyFJsOa4g2bJI5gaqY="
-          alt=""
-        />
-      </div>
-
-      <div className="nav-items">
-        <ul>
-          <li>Home</li>
-          <li>About us</li>
-          <li>contact us</li>
-          <li>Cart</li>
-        </ul>
-      </div>
-    </div>
-  );
-};
-
-const Body = () => {
-  // Extract ALL restaurants
-  const allRestaurants = resObj.data.cards
-    .filter((c) => c?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.Restaurant")
-    .map((c) => c?.card?.card?.info);
-
-  return (
-    <div className="body">
-      <div className="search">search</div>
-      <div className="res-container">
-        {allRestaurants.map((restaurant) => (
-            
-          <RestaurantCard 
-            key={restaurant?.id}
-            title={restaurant?.name} 
-            cuisines={restaurant?.cuisines?.join(", ")} 
-            avgRating={restaurant?.avgRatingString || restaurant?.avgRating} 
-            time={restaurant?.sla?.slaString} 
-          />
-          
-        ))}
-      </div>
-    </div>
-  );
-};
- 
-const AppLayout = () => {
-  return (
-    <div className="app">
-      <Header></Header>
-      <Body></Body>
-    </div>
-  );
-};
-
-const root = createRoot(document.getElementById("root"));
-root.render(<AppLayout></AppLayout>);
+export default resList

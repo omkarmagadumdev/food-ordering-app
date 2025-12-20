@@ -1,43 +1,86 @@
 
 import { useEffect, useState } from "react";
-import resList from "../utils/mockData";
 import RestaurantCard from "./RestaurantCard";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
-  // Extract ALL restaurants
-  const allRestaurants = resList.data.cards
-  .filter((c) => c?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.Restaurant")
-  .map((c) => c?.card?.card?.info);
-  const [Restaurant, setAllRestaurants] = useState(allRestaurants);
+  const [allRestaurants, setAllRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
 
-  useEffect(()=>{
-    fetchData()
-    
-  },[])
 
-  const fetchData = async ()=>{
-   const data =  await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9254533&lng=77.546757&collection=83639&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null")
 
-   const json = await data.jason();
-   console.log(json);
-   
-  }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  return (
+  const fetchData = async () => {
+    try {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9254533&lng=77.546757&collection=83669&tags=layout_CCS_Rolls&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
+      );
+
+      const json = await data.json();
+
+      // Swiggy responses sometimes place restaurants directly in cards
+      // and sometimes inside gridElements.infoWithStyle.restaurants. Grab both.
+      const cards = json?.data?.cards ?? [];
+
+      const directRestaurants = cards
+        .filter(
+          (c) =>
+            c?.card?.card?.["@type"] ===
+            "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
+        )
+        .map((c) => c?.card?.card?.info)
+        .filter(Boolean);
+
+      const gridRestaurants = cards
+        .flatMap(
+          (c) =>
+            c?.card?.card?.gridElements?.infoWithStyle?.restaurants ?? []
+        )
+        .map((r) => r?.info ?? r)
+        .filter(Boolean);
+
+      const fetchedRestaurants = [...directRestaurants, ...gridRestaurants];
+
+      if (Array.isArray(fetchedRestaurants) && fetchedRestaurants.length > 0) {
+        setAllRestaurants(fetchedRestaurants);
+        setRestaurants(fetchedRestaurants);
+      }
+    } catch (err) {
+      console.error("Failed to fetch restaurants", err);
+      setAllRestaurants([]);
+      setRestaurants([]);
+    }
+  };
+
+
+
+
+  return allRestaurants.length ===0  ? <Shimmer></Shimmer> :  (
     <div className="body">
       <div className="filter">
+        <div className="search">
+        <input type="text" className="searchbtn" />
+        <button onClick={()=>{
+          
+        }}>Search</button>
+
+        </div>
+
         <button className="filterbtn" onClick={() => {
           const filtered = allRestaurants.filter((res) =>{
             const rating = Number(res?.avgRating ?? res?.avgRatingString)
             return !Number.isNaN(rating) && rating > 4.5
           });
-          setAllRestaurants(filtered);
+          setRestaurants(filtered);
         }}>
           Top Rated Restaurants
         </button>
       </div>
       <div className="res-container">
-        {Restaurant.map((restaurant) => (
+        {restaurants.map((restaurant) => (
             
           <RestaurantCard   
             key={restaurant?.id}

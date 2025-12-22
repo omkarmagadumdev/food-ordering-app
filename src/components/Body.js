@@ -5,14 +5,29 @@ import Shimmer from "./Shimmer";
 
 const Body = () => {
   const [allRestaurants, setAllRestaurants] = useState([]);
-  const [restaurants, setRestaurants] = useState([]);
-  const [searchText,setsearchtext] = useState("")
+  const [restaurants, setRestaurants] = useState([]);   
+  const [searchText, setSearchText] = useState("")
 
-  console.log("component rerenderd")
+  console.log("component rerenderd", allRestaurants.length)
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleSearch = () => {
+    const query = searchText.trim().toLowerCase();
+    if (!query) {
+      setRestaurants(allRestaurants);
+      return;
+    }
+
+    const filtered = allRestaurants.filter((res) => {
+      const name = res?.name || "";
+      return name.toLowerCase().includes(query);
+    });
+
+    setRestaurants(filtered);
+  };
 
   const fetchData = async () => {
     try {
@@ -44,10 +59,13 @@ const Body = () => {
         .filter(Boolean);
 
       const fetchedRestaurants = [...directRestaurants, ...gridRestaurants];
+      const normalizedRestaurants = fetchedRestaurants
+        .map((r) => r?.info ?? r)
+        .filter(Boolean);
 
-      if (Array.isArray(fetchedRestaurants) && fetchedRestaurants.length > 0) {
-        setAllRestaurants(fetchedRestaurants);
-        setRestaurants(fetchedRestaurants);
+      if (Array.isArray(normalizedRestaurants) && normalizedRestaurants.length > 0) {
+        setAllRestaurants(normalizedRestaurants);
+        setRestaurants(normalizedRestaurants);
       }
     } catch (err) {
       console.error("Failed to fetch restaurants", err);
@@ -60,17 +78,16 @@ const Body = () => {
     <div className="body">
       <div className="filter">
         <div className="search">
-        <input type="text" className="searchbtn" value={searchText || ""} onChange={(e)=>{
-          setsearchtext(e.target.value)  
-         
-          
-        }}/>
-        <button onClick={()=>{
-          const filteredRestaurants = allRestaurants.filter((res) =>
-            res?.name?.toLowerCase().includes(searchText.toLowerCase())
-          );
-          setRestaurants(filteredRestaurants);
-        }}>Search</button>
+        <input
+          type="text"
+          className="searchbtn"
+          value={searchText || ""}
+          onChange={(e) => setSearchText(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSearch();
+          }}
+        />
+        <button onClick={handleSearch}>Search</button>
 
         </div>
 
@@ -88,12 +105,12 @@ const Body = () => {
         {restaurants.map((restaurant) => (
             
           <RestaurantCard   
-            key={restaurant?.id}
-            title={restaurant?.name} 
-            cuisines={restaurant?.cuisines?.join(", ")} 
-            avgRating={restaurant?.avgRatingString || restaurant?.avgRating} 
-            time={restaurant?.sla?.slaString}
-            cloudinaryImageId={restaurant?.cloudinaryImageId}
+            key={restaurant?.id || restaurant?.info?.id}
+            title={restaurant?.name || restaurant?.info?.name || restaurant?.card?.card?.info?.name} 
+            cuisines={(restaurant?.cuisines || restaurant?.info?.cuisines || restaurant?.card?.card?.info?.cuisines || []).join(", ")} 
+            avgRating={restaurant?.avgRatingString || restaurant?.avgRating || restaurant?.info?.avgRatingString || restaurant?.info?.avgRating} 
+            time={restaurant?.sla?.slaString || restaurant?.info?.sla?.slaString}
+            cloudinaryImageId={restaurant?.cloudinaryImageId || restaurant?.info?.cloudinaryImageId || restaurant?.card?.card?.info?.cloudinaryImageId}
           />
           
         ))}

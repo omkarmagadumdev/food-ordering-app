@@ -1,0 +1,9 @@
+const json = await data.json();
+
+    const restaurants = json.cards
+      .filter(
+        (c) =>
+          c.card?.card?.["@type"] ===
+          "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
+      )
+      .map((c) => {

@@ -1,39 +1,21 @@
+const Header = ()=>{
 
-import { useState } from "react";
-import { logo_URL } from "../utils/constants";
-
-const Header = () => {
-
-
-  const [btnNameReact,setbtnNameReact] = useState("Login")
-  return (
+  return(
     <div className="header">
-      <div className="logo-container">
-        <img
-          id="logo"
-          src={logo_URL}
-          alt="Food Delivery Logo"
-        />
-      </div>
 
-      <div className="nav-items">
+      <div className="img-container">
+          <img className="logo"  src="https://cdn.dribbble.com/userupload/16778067/file/original-d75cb39663149843b1572e4cc64681fe.jpg?resize=400x0" alt="" />
+      </div>
+      <div className="navitems">
         <ul>
           <li>Home</li>
           <li>About us</li>
-          <li>contact us</li>
+          <li>Contact</li>
           <li>Cart</li>
-          <button className="loginbtn" 
-          onClick={()=>{
-            btnNameReact === "login"?setbtnNameReact("logout") : setbtnNameReact("login")
-           
-          }}
-
-          
-          >{btnNameReact}</button>
         </ul>
       </div>
     </div>
-  );    
-};
+  )
+}
 
 export default Header

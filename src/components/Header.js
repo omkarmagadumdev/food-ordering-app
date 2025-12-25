@@ -1,10 +1,12 @@
+import { CDN_URL, logo_URL } from "../utils/constants"
+
 const Header = ()=>{
 
   return(
     <div className="header">
 
       <div className="img-container">
-          <img className="logo"  src="https://cdn.dribbble.com/userupload/16778067/file/original-d75cb39663149843b1572e4cc64681fe.jpg?resize=400x0" alt="" />
+          <img className="logo"  src={logo_URL} alt="" />
       </div>
       <div className="navitems">
         <ul>

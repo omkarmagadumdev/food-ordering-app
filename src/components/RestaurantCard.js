@@ -12,10 +12,15 @@ const RestaurentCard = (props)=>{
             : "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/cvo1djhbwrgfqd64k0tl"
         } alt={resData?.name || "restaurant"} />
       </div>
-      <h3>{resData?.name}</h3>
-      <h4>{resData?.cuisines?.join(", ")}</h4>
-      <h4>{resData?.rating}</h4>
-      <h4>{resData?.deliveryTime} mins</h4>
+      <div className="card-content">
+        <h3>{resData?.name}</h3>
+        <p className="cuisines">{resData?.cuisines?.join(", ")}</p>
+        <div className="card-meta">
+          <span className="rating">⭐ {resData?.rating}</span>
+          <span className="dot">•</span>
+          <span className="delivery-time">{resData?.deliveryTime} mins</span>
+        </div>
+      </div>
     </div>
   )
 }

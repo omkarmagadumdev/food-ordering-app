@@ -1,4 +1,4 @@
-import { CDN_URL, logo_URL } from "../utils/constants"
+import { logo_URL } from "../utils/constants"
 
 const Header = ()=>{
 

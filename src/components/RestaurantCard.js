@@ -1,16 +1,20 @@
+import { CDN_URL } from "../utils/constants";
 
-
-const RestaurentCard = (props)=>{
-  const{resData} = props
+const RestaurentCard = (props) => {
+  const { resData } = props;
   
   return (
     <div className="res-card">
       <div className="img-container">
-        <img className="logo"  src={
-          resData?.imageId
-            ? `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/${resData.imageId}`
-            : "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/cvo1djhbwrgfqd64k0tl"
-        } alt={resData?.name || "restaurant"} />
+        <img
+          className="logo"
+          src={
+            resData?.imageId
+              ? `${CDN_URL}${resData.imageId}`
+              : "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/cvo1djhbwrgfqd64k0tl"
+          }
+          alt={resData?.name || "restaurant"}
+        />
       </div>
       <div className="card-content">
         <h3>{resData?.name}</h3>
@@ -22,7 +26,7 @@ const RestaurentCard = (props)=>{
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default RestaurentCard

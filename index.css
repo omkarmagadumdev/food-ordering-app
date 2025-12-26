@@ -95,11 +95,47 @@ body {
   box-shadow: 0 10px 24px rgba(0,0,0,0.08);
   padding: 12px;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+ 
 }
 
 .res-card:hover{
   transform: translateY(-4px);
   box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+  cursor: pointer;
+  
+}
+.showfull,
+.filterbtn {
+  padding: 10px 20px;
+  margin: 0 10px 18px 0;
+  background: #f97316;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25);
+}
+.showfull:hover {
+  background: #ea580c;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+  transform: translateY(-2px);
+}
+.filterbtn:hover {
+  background: #ea580c;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+  transform: translateY(-2px);
+}
+
+.showfull:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3);
+}
+.filterbtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3);
 }
 
 .img-container{

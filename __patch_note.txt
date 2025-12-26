@@ -1,1 +1,0 @@
-Updating Body.js to use json?.data?.cards fallback and fix rendering map.

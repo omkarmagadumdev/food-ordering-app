@@ -2,12 +2,12 @@
   "name": "food-ordering-app",
   "version": "1.0.0",
   "description": "food-ordering-app",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
     "clean": "rimraf .parcel-cache dist",
-    "dev": "npm run clean && npm start",
+    "dev": "powershell -ExecutionPolicy Bypass -File ./dev.ps1",
     "test": "jest"
   },
   "repository": {
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/omkarmagadumdev/food-ordering-app#readme",
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "parcel": "^2.16.3",
     "rimraf": "^6.1.2"
   },

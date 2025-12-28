@@ -592,6 +592,213 @@ body {
 }
 
 /* Menu items */
+.menu-items-section {
+  margin-top: 24px;
+}
+
+.category-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #d4d5d9;
+}
+
+.category-section-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3e4152;
+  margin: 0;
+}
+
+.collapse-icon {
+  font-size: 1.2rem;
+  color: #3e4152;
+  cursor: pointer;
+}
+
+.menu-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dish-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid #d4d5d9;
+  gap: 20px;
+}
+
+.dish-card:last-child {
+  border-bottom: none;
+}
+
+.dish-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dish-type-indicator {
+  margin-bottom: 4px;
+}
+
+.veg-indicator {
+  font-size: 1.1rem;
+  display: inline-block;
+}
+
+.dish-badges {
+  margin-bottom: 4px;
+}
+
+.bestseller-badge {
+  color: #ee9c00;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dish-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #3e4152;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.dish-price {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #3e4152;
+  margin: 4px 0;
+}
+
+.dish-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.rating-star {
+  color: #116649;
+  font-size: 0.9rem;
+}
+
+.rating-text {
+  color: #3e4152;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.dish-description {
+  font-size: 0.95rem;
+  color: rgba(2, 6, 12, 0.6);
+  line-height: 1.5;
+  margin: 8px 0 0 0;
+  max-width: 600px;
+}
+
+.more-link {
+  color: #3e4152;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.more-link:hover {
+  text-decoration: underline;
+}
+
+.dish-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.dish-image-container {
+  position: relative;
+  width: 156px;
+  height: 144px;
+  border-radius: 12px;
+  overflow: visible;
+  margin-bottom: 8px;
+}
+
+.dish-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.add-to-cart-btn {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  color: #1ba672;
+  border: 1px solid #d4d5d9;
+  border-radius: 8px;
+  padding: 10px 32px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-to-cart-btn:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+  transform: translateX(-50%) translateY(-1px);
+  border-color: #1ba672;
+}
+
+.add-to-cart-btn:active {
+  transform: translateX(-50%) translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.customisable-text {
+  font-size: 0.75rem;
+  color: rgba(2, 6, 12, 0.6);
+  margin-top: 8px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .dish-card {
+    flex-direction: column;
+    padding: 16px 0;
+  }
+
+  .dish-image-container {
+    width: 100%;
+    height: 200px;
+  }
+
+  .dish-right {
+    width: 100%;
+  }
+
+  .dish-description {
+    max-width: 100%;
+  }
+}
+
+/* Legacy menu items - keep for backward compatibility */
 .menu-items {
   display: grid;
   gap: 18px;

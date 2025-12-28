@@ -1,6 +1,6 @@
 import RestaurentCard from "./RestaurantCard";
 import {  useState, useEffect } from "react";
-import Shimmer from "./Shimmer"
+import {Shimmer} from "./Shimmer"
 
 
 const Body = () => {
@@ -21,9 +21,6 @@ const Body = () => {
       "https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9254533&lng=77.546757&collection=83639&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
     );
 
-
-    
-    
     const json = await data.json();
     
     const cards = json?.data?.cards || json?.cards || [];

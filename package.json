@@ -4,8 +4,8 @@
   "description": "food-ordering-app",
   "type": "module",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html",
+    "start": "cross-env TMPDIR=D:/Temp TMP=D:/Temp TEMP=D:/Temp parcel index.html",
+    "build": "cross-env TMPDIR=D:/Temp TMP=D:/Temp TEMP=D:/Temp parcel build index.html",
     "clean": "rimraf .parcel-cache dist",
     "dev": "powershell -ExecutionPolicy Bypass -File ./dev.ps1",
     "test": "jest"
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/omkarmagadumdev/food-ordering-app#readme",
   "devDependencies": {
     "cross-env": "^10.1.0",
+    "package-json-from-dist": "^1.0.1",
     "parcel": "^2.16.3",
     "rimraf": "^6.1.2"
   },

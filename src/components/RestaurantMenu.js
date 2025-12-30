@@ -12,13 +12,21 @@ const RestaurantMenu = () => {
     },[])
 
     const fetchData = async ()=>{
-        
-          const data = await fetch("https://raw.githubusercontent.com/namastedev/namaste-react/refs/heads/main/swiggy-api")
+        try{
+          
+          const data = await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9254533&lng=77.546757&restaurantId=153731&catalog_qa=undefined&query=Biryani&submitAction=ENTER")
 
-          const json = await data.json()
+          console.log(data.status);
+          const text = await data.text()
+          // console.log(text);
+          
+          
+        }catch(err){
+          console.log("error",err)
+        }
           
          
-         console.log(json.data)
+        //  console.log(json.data)
           // setresInfo(json.data)
         
     }
@@ -27,7 +35,7 @@ const RestaurantMenu = () => {
     
     // if(resInfo === null ) return <Shimmer />
     
-    const itemcards = resInfo?.cards[1].card.card.gridElements.infoWithStyle.restaurants
+    // const itemcards = resInfo?.cards[1].card.card.gridElements.infoWithStyle.restaurants
     // console.log(itemcards);
     
 

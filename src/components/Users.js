@@ -1,13 +1,27 @@
-const Users = ()=>{
-    return(
+
+
+const Users = ({ data }) => {
+
+
+    const { name, email, login, location, bio, avatar_url } = data ||{}
+
+    return (
         <div className="userscard">
-            <h2>Name:Omkar</h2>
-            <h3>Email:omkar@gamil.com</h3>
-            <h3>Contacts:9382980</h3>
-
+            {avatar_url && (
+                <img
+                    className="user-avatar"
+                    src={avatar_url}
+                    alt={`${login || name || "user"} avatar`}
+                />
+            )}
+            <h2>{name}</h2>
+            <h3>{email}</h3>
+            <h3>{login}</h3>
+            <h3>{location}</h3>
+            <p>{bio}</p>
         </div>
-    )
-}
+    );
+};
 
-export default Users
+export default Users;
 

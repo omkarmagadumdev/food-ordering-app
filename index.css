@@ -242,7 +242,7 @@ body {
   box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3);
 }
 
-.lessrated:ctive {
+.lessrated:active {
   transform: translateY(0);
   box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3);
 }

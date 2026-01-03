@@ -1,5 +1,5 @@
 
-const Shimmer = ()=>{
+ const Shimmer = ()=>{
     return (
         <div className="shimmercontainer">
             <div className="shimmercard">
@@ -77,4 +77,5 @@ const Shimmer = ()=>{
         </div>
     )
 }
+
 export default Shimmer

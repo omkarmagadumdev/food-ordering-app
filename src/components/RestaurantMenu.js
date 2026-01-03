@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Shimmer } from "./Shimmer";
+import Shimmer from "./Shimmer";
 import RestaurantMenuCard from "./RestaurantMenuCard";
 import { mockRestaurantMenus } from "../utils/mockData";
 

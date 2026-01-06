@@ -1,5 +1,5 @@
 
-const Shimmer = () => {
+ const Shimmer = ()=>{
     return (
         <div className="shimmercontainer">
             <div className="shimmercard">
@@ -78,6 +78,4 @@ const Shimmer = () => {
     )
 }
 
-// Support both default and named imports for compatibility
-export { Shimmer };
-export default Shimmer;
+export default Shimmer

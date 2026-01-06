@@ -1,41 +1,37 @@
-import { useParams } from "react-router-dom";
-import Shimmer from "./Shimmer";
+import { useEffect, useState } from "react";
+import {Shimmer} from "./Shimmer";
 import RestaurantMenuCard from "./RestaurantMenuCard";
-import useRestaurantMenu from "../utils/useRestaurantMenu";
+import {restaurantMenu} from "../utils/mockData"
 
 const RestaurantMenu = () => {
-    const { resId } = useParams();
-    const { resInfo, isLoading, error } = useRestaurantMenu(resId);
 
-    if (isLoading || resInfo === null) return <Shimmer />;
+    const [resInfo, setresInfo] = useState(null);
 
-    if (error) {
-        return (
-            <div className="RestaurantMenuconatiner">
-                <p>Unable to load menu right now. Please try again.</p>
-            </div>
-        );
+
+    useEffect(()=>{
+            fetchData()
+    },[])
+
+    const fetchData = async ()=>{
+      setresInfo(restaurantMenu.name)
     }
+    
+    
+    
+    // if(resInfo === null ) return <Shimmer />
+    
+    // const itemcards = resInfo?.cards[1].card.card.gridElements.infoWithStyle.restaurants
+    // console.log(itemcards);
+    
 
-    return (
-        <div className="RestaurantMenuconatiner">
-            <div className="restaurant-header">
-                <h1>{resInfo.info.name}</h1>
-                <p className="restaurant-cuisines">{resInfo.info.cuisines.join(", ")}</p>
-                <div className="restaurant-meta">
-                    <span className="rating">⭐ {resInfo.info.avgRating}</span>
-                    <span className="dot">•</span>
-                    <span className="cost">{resInfo.info.costForTwo} for two</span>
-                    <span className="dot">•</span>
-                    <span className="delivery">{resInfo.info.deliveryTime} mins</span>
-                </div>
-            </div>
-            
-            {resInfo.menu.map((category, index) => (
-                <RestaurantMenuCard key={index} category={category} />
-            ))}
-        </div>
-    );
+
+    
+
+  return (
+   <div className="RestaurantMenuconatiner">
+        <RestaurantMenuCard  />
+   </div>
+  );
 };
 
 export default RestaurantMenu;

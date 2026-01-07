@@ -30,7 +30,10 @@ useEffect(()=>{
             <Link className="px-3 py-2 rounded-md text-neutral-700 font-medium hover:text-orange-500 hover:bg-orange-50" to="/contact">Contact us</Link>
           </li>
           <li>
-            <Link className="px-3 py-2 rounded-md text-neutral-700 font-medium hover:text-orange-500 hover:bg-orange-50" to="/cart">cart</Link>
+            <Link className="px-3 py-2 rounded-md text-neutral-700 font-medium hover:text-orange-500 hover:bg-orange-50" to="/grocery">Grocery</Link>
+          </li>
+          <li>
+            <Link className="px-3 py-2 rounded-md text-neutral-700 font-medium hover:text-orange-500 hover:bg-orange-50" to="/cart">Cart</Link>
           </li>
           <button
             onClick={()=>{

@@ -1,31 +1,85 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import About from "./components/About";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Contact from "./components/Contact";
 import Cart from "./components/Cart";
 import RestaurantMenu from "./components/RestaurantMenu";
+import Grocery from "./components/Grocery";
 
 const AppLayout = () => {
+  const [onlineStatus, setOnlineStatus] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setOnlineStatus(true);
+    const handleOffline = () => setOnlineStatus(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
   return (
     <div className="max-w-300 mx-auto px-6 pb-8">
+      {/* Online Status Indicator */}
+      <div className="fixed top-4 right-4 z-50">
+        <div className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg ${
+          onlineStatus 
+            ? 'bg-green-500 text-white' 
+            : 'bg-red-500 text-white'
+        }`}>
+          <div className={`w-2 h-2 rounded-full ${
+            onlineStatus ? 'bg-white' : 'bg-white animate-pulse'
+          }`} />
+          <span className="text-sm font-semibold">
+            {onlineStatus ? 'Online' : 'Offline'}
+          </span>
+        </div>
+      </div>
       <Header />
-      <Routes>
-        <Route path="/" element={<Body />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact/>} ></Route>
-        <Route path="/cart" element={<Cart/>}></Route>
-        <Route path="/restaurant/:resId" element={<RestaurantMenu />} />
-      </Routes>
+      <Outlet />
     </div>
   );
 };
 
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/grocery",
+        element: <Grocery />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/restaurant/:resId",
+        element: <RestaurantMenu />,
+      },
+    ],
+  },
+]);
+
 const root = createRoot(document.getElementById("root"));
-root.render(
-  <BrowserRouter>
-    <AppLayout />
-  </BrowserRouter>
-);
+root.render(<RouterProvider router={appRouter} />);

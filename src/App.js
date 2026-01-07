@@ -10,11 +10,11 @@ import RestaurantMenu from "./components/RestaurantMenu";
 import Grocery from "./components/Grocery";
 
 const AppLayout = () => {
-  const [onlineStatus, setOnlineStatus] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   useEffect(() => {
-    const handleOnline = () => setOnlineStatus(true);
-    const handleOffline = () => setOnlineStatus(false);
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
 
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
@@ -30,15 +30,15 @@ const AppLayout = () => {
       {/* Online Status Indicator */}
       <div className="fixed top-4 right-4 z-50">
         <div className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg ${
-          onlineStatus 
+          isOnline 
             ? 'bg-green-500 text-white' 
             : 'bg-red-500 text-white'
         }`}>
           <div className={`w-2 h-2 rounded-full ${
-            onlineStatus ? 'bg-white' : 'bg-white animate-pulse'
+            isOnline ? 'bg-white' : 'bg-white animate-pulse'
           }`} />
           <span className="text-sm font-semibold">
-            {onlineStatus ? 'Online' : 'Offline'}
+            {isOnline ? 'Online' : 'Offline'}
           </span>
         </div>
       </div>

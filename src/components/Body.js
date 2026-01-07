@@ -105,7 +105,7 @@ const Body = () => {
           Show all
         </button>
       </div>
-      <div className="mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(260px,1fr))]">
+      <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {ListOfRestaurent.map((r) => (
           <RestaurentCard key={r.id} resData={r} />
         ))}

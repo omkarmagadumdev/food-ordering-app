@@ -1,7 +1,7 @@
 
  const Shimmer = ()=>{
     return (
-        <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(260px,1fr))] p-5">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-5">
             {Array.from({length: 12}).map((_, i) => (
                 <div key={i} className="bg-white border border-neutral-200 rounded-xl p-3 shadow-lg animate-pulse">
                     <div className="w-full h-40 bg-neutral-200 rounded-lg mb-3"/>

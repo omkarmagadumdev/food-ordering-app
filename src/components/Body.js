@@ -56,51 +56,56 @@ const Body = () => {
 
 
   return ListOfRestaurent.length ===0 ? <Shimmer /> : (
-    <div className="body">
-      <div className="search">
-        <input type="text" className="searchbox" value={serachText} onChange={(e)=>{
+    <div className="max-w-300 mx-auto px-6 pb-8">
+      <div className="mt-5 flex items-center gap-3 bg-white border border-neutral-200 rounded-xl shadow px-4 py-3">
+        <input
+          type="text"
+          className="flex-1 px-3 py-2 border border-neutral-200 rounded-md text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+          value={serachText}
+          onChange={(e)=>{
               setsearchText(e.target.value)
-        }}/>
-        <button className="searchbtn"
-        onClick={()=>{
-          const filtered = ListOfRestaurent.filter((res)=>{
-                return res.name.toLowerCase().includes(serachText.toLowerCase())
-          })
-
-        
-
-          setListOfRestaurent(filtered)
-          
-        }}
-        >Search
-
+          }}
+          placeholder="Search restaurants..."
+        />
+        <button
+          className="px-5 py-2 rounded-md text-white font-semibold shadow bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-red-600"
+          onClick={()=>{
+            const filtered = ListOfRestaurent.filter((res)=>{
+              return res.name.toLowerCase().includes(serachText.toLowerCase())
+            })
+            setListOfRestaurent(filtered)
+          }}
+        >
+          Search
         </button>
       </div>
-        <button className="filterbtn"
-        onClick={()=>{
-          const filtered = originallist.filter(
-            (res)=>res.rating > 4.3
-
-          )
-          setListOfRestaurent(filtered)
-        }}
-      
-        >Top Rated restaurent</button>
-        <button className="lessrated" 
-        onClick={()=>{
-          const filtered = originallist.filter(
-            (res)=>{
-              return res.rating < 4.2
-
-            }
-          )
-          setListOfRestaurent(filtered)
-        }}
-        >worst rated restaurent</button>
-        <button className="showfull"
-        onClick={ ()=> setListOfRestaurent(originallist)}
-        >show full</button>
-      <div className="restaurentcontainer">
+      <div className="mt-4 flex flex-wrap gap-3">
+        <button
+          className="px-4 py-2 rounded-md text-white font-semibold shadow bg-orange-500 hover:bg-orange-600"
+          onClick={()=>{
+            const filtered = originallist.filter((res)=> res.rating > 4.3)
+            setListOfRestaurent(filtered)
+          }}
+        >
+          Top Rated restaurants
+        </button>
+        <button
+          className="px-4 py-2 rounded-md text-white font-semibold shadow bg-red-500 hover:bg-red-600"
+          onClick={()=>{
+            const filtered = originallist.filter((res)=> res.rating < 4.2)
+            setListOfRestaurent(filtered)
+          }}
+        >
+          Worst rated restaurants
+        </button>
+        <button
+          className="px-4 py-2 rounded-md text-white font-semibold shadow bg-neutral-800 hover:bg-neutral-900"
+          onClick={ ()=> setListOfRestaurent(originallist)}
+        >
+          Show all
+        </button>
+      </div>
+      <div className="mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(260px,1fr))]">
         {ListOfRestaurent.map((r) => (
           <RestaurentCard key={r.id} resData={r} />
         ))}

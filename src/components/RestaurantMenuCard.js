@@ -9,44 +9,48 @@ const RestaurantMenuCard = ({ category }) => {
   }
 
   return (
-    <div className="menu-category-section">
+    <div className="bg-white border border-neutral-200 rounded-xl shadow-lg overflow-hidden">
       <div
-        className="category-header-main"
+        className="flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-neutral-50 transition-colors"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <h3 className="category-name">
+        <h3 className="text-lg font-bold text-neutral-900">
           {category.title} ({category.itemCards.length})
         </h3>
-        <span className="expand-icon">{isExpanded ? "▼" : "▲"}</span>
+        <span className="text-neutral-600 font-bold text-xl">{isExpanded ? "▼" : "▲"}</span>
       </div>
 
       {isExpanded && (
-        <div className="items-list">
+        <div className="divide-y divide-neutral-100">
           {category.itemCards.map((item) => {
             const itemInfo = item.card.info;
             const price =
               (itemInfo.price || itemInfo.defaultPrice) / 100;
 
             return (
-              <div key={itemInfo.id} className="menu-item-card">
-                <div className="item-left">
+              <div key={itemInfo.id} className="flex items-start justify-between gap-4 px-6 py-4">
+                <div className="flex-1">
                   {/* Veg/Non-Veg Indicator */}
-                  <div className="veg-indicator">
+                  <div className="mb-2">
                     {itemInfo.isVeg ? (
-                      <div className="veg-dot"></div>
+                      <div className="w-5 h-5 border-2 border-green-600 flex items-center justify-center">
+                        <div className="w-2.5 h-2.5 rounded-full bg-green-600"></div>
+                      </div>
                     ) : (
-                      <div className="nonveg-dot"></div>
+                      <div className="w-5 h-5 border-2 border-red-600 flex items-center justify-center">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-600"></div>
+                      </div>
                     )}
                   </div>
 
                   {/* Item Info */}
-                  <div className="item-details">
-                    <h4 className="item-name">{itemInfo.name}</h4>
-                    <p className="item-price">₹{price}</p>
+                  <div>
+                    <h4 className="text-base font-semibold text-neutral-900 mb-1">{itemInfo.name}</h4>
+                    <p className="text-sm font-bold text-neutral-700 mb-2">₹{price}</p>
 
                     {/* Rating */}
                     {itemInfo.ratings?.aggregatedRating?.rating && (
-                      <p className="item-rating">
+                      <p className="text-xs text-green-600 font-medium mb-2">
                         ⭐{" "}
                         {itemInfo.ratings.aggregatedRating.rating} (
                         {itemInfo.ratings.aggregatedRating.ratingCountV2})
@@ -55,9 +59,9 @@ const RestaurantMenuCard = ({ category }) => {
 
                     {/* Description */}
                     {itemInfo.description && (
-                      <p className="item-description">
-                        {itemInfo.description.length > 100
-                          ? itemInfo.description.substring(0, 100) + "..."
+                      <p className="text-sm text-neutral-500 leading-relaxed">
+                        {itemInfo.description.length > 120
+                          ? itemInfo.description.substring(0, 120) + "..."
                           : itemInfo.description}
                       </p>
                     )}
@@ -66,13 +70,15 @@ const RestaurantMenuCard = ({ category }) => {
 
                 {/* Item Image and Add Button */}
                 {itemInfo.imageId && (
-                  <div className="item-image-section">
+                  <div className="relative shrink-0">
                     <img
                       src={`${CDN_URL}${itemInfo.imageId}`}
                       alt={itemInfo.name}
-                      className="item-image"
+                      className="w-32 h-32 object-cover rounded-lg"
                     />
-                    <button className="add-button">ADD</button>
+                    <button className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-6 py-1.5 bg-white text-green-600 font-bold text-sm rounded-md shadow-md border border-neutral-200 hover:bg-neutral-50">
+                      ADD
+                    </button>
                   </div>
                 )}
               </div>

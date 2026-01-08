@@ -4,3 +4,4 @@ export const logo_URL = "https://media.istockphoto.com/id/1289190483/vector/food
 // Base CDN path for restaurant images
 export const CDN_URL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/";
 
+export const  resturentdata = "https://www.swiggy.com/dapi/restaurants/list/update"

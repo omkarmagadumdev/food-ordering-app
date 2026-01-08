@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import About from "./components/About";
+import Shimmer from "./components/Shimmer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Contact from "./components/Contact";
-import Cart from "./components/Cart";
-import RestaurantMenu from "./components/RestaurantMenu";
-import Grocery from "./components/Grocery";
+
+
+
+const Grocery = lazy(()=>import('./components/Grocery'))
+const About = lazy(() => import("./components/About"))
+const Contact = lazy(()=>import('./components/Contact'));
+const Cart = lazy(()=>import('./components/Cart'))
+const RestaurantMenu = lazy(()=>import('./components/RestaurantMenu'))
 
 const AppLayout = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -59,27 +63,32 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />,
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <About />
+          </Suspense>
+        ),
       },
       {
         path: "/contact",
-        element: <Contact />,
+        element: <Suspense fallback={<Shimmer/>}> <Contact /> </Suspense>
       },
       {
         path: "/grocery",
-        element: <Grocery />,
+        element: <Suspense fallback={<Shimmer/>}><Grocery/></Suspense>
       },
       {
         path: "/cart",
-        element: <Cart />,
+        element: <Suspense fallback={<Shimmer/>}> <Cart/> </Suspense>
       },
       {
         path: "/restaurant/:resId",
-        element: <RestaurantMenu />,
+        element: <Suspense fallback={<Shimmer/>} > <RestaurantMenu/> </Suspense>
       },
     ],
   },
 ]);
+
 
 const root = createRoot(document.getElementById("root"));
 root.render(<RouterProvider router={appRouter} />);

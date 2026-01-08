@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import RestaurantMenuCard from "./RestaurantMenuCard";
 
+
 const RestaurantMenu = () => {
     const [resInfo, setresInfo] = useState(null);
     const { resId } = useParams();
@@ -14,8 +15,9 @@ const RestaurantMenu = () => {
     const fetchData = async () => {
         try {
             const data = await fetch(
-                `https://proxy.corsfix.com/?https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9254533&lng=77.546757&restaurantId=${resId}`
+                `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9254533&lng=77.546757&restaurantId=576474&catalog_qa=undefined&query=Biryani&submitAction=ENTER${resId}`
             );
+            console.log(data)
             const json = await data.json();
             setresInfo(json.data);
         } catch (error) {

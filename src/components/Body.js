@@ -1,27 +1,25 @@
-import RestaurentCard, { withPromotedlabel }  from "./RestaurantCard";
-import {  useState, useEffect } from "react";
-import Shimmer from "./Shimmer"
+import RestaurantCard, { withPromotedlabel } from "./RestaurantCard";
+import { useState, useEffect } from "react";
+import Shimmer from "./Shimmer";
 
 
 const Body = () => {
-  const [ListOfRestaurent, setListOfRestaurent] = useState([]);
-  const [originallist,setoriginallist] = useState([])
-  const [serachText, setsearchText] = useState("")
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [originalList, setOriginalList] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
-  const RestaurentCarPromoted = withPromotedlabel(RestaurentCard)
+  const RestaurantCardPromoted = withPromotedlabel(RestaurantCard);
   
 
 
-   useEffect(()=>{
-     fetchData();
-
-   },[])
+  useEffect(() => {
+    fetchData();
+  }, []);
     
   
+  // Fetch restaurants data from Swiggy API
   const fetchData = async () => {
-
-
-      const data = await fetch(
+    const data = await fetch(
       "https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9254533&lng=77.546757&collection=83639&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
     );
 
@@ -53,33 +51,33 @@ const Body = () => {
       };
     });
     
-    setListOfRestaurent(restaurants)
-    setoriginallist(restaurants)
+    setListOfRestaurants(restaurants);
+    setOriginalList(restaurants);
   
 };
 
 
 
 
-  return ListOfRestaurent.length ===0 ? <Shimmer /> : (
+  return listOfRestaurants.length === 0 ? <Shimmer /> : (
     <div className="max-w-300 mx-auto px-6 pb-8">
       <div className="mt-5 flex items-center gap-3 bg-white border border-neutral-200 rounded-xl shadow px-4 py-3">
         <input
           type="text"
           className="flex-1 px-3 py-2 border border-neutral-200 rounded-md text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
-          value={serachText}
-          onChange={(e)=>{
-              setsearchText(e.target.value)
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
           }}
           placeholder="Search restaurants..."
         />
         <button
           className="px-5 py-2 rounded-md text-white font-semibold shadow bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-red-600 cursor-pointer"
-          onClick={()=>{
-            const filtered = ListOfRestaurent.filter((res)=>{
-              return res.name.toLowerCase().includes(serachText.toLowerCase())
-            })
-            setListOfRestaurent(filtered)
+          onClick={() => {
+            const filtered = listOfRestaurants.filter((res) =>
+              res.name.toLowerCase().includes(searchText.toLowerCase())
+            );
+            setListOfRestaurants(filtered);
           }}
         >
           Search
@@ -88,32 +86,36 @@ const Body = () => {
       <div className="mt-4 flex flex-wrap gap-3">
         <button
           className="px-4 py-2 rounded-md text-white font-semibold shadow bg-orange-500 hover:bg-orange-600 cursor-pointer"
-          onClick={()=>{
-            const filtered = originallist.filter((res)=> res.rating > 4.3)
-            setListOfRestaurent(filtered)
+          onClick={() => {
+            const filtered = originalList.filter((res) => res.rating > 4.3);
+            setListOfRestaurants(filtered);
           }}
         >
           Top Rated restaurants
         </button>
         <button
           className="px-4 py-2 rounded-md text-white font-semibold shadow bg-red-500 hover:bg-red-600 cursor-pointer"
-          onClick={()=>{
-            const filtered = originallist.filter((res)=> res.rating < 4.2)
-            setListOfRestaurent(filtered)
+          onClick={() => {
+            const filtered = originalList.filter((res) => res.rating < 4.2);
+            setListOfRestaurants(filtered);
           }}
         >
           Worst rated restaurants
         </button>
         <button
           className="px-4 py-2 rounded-md text-white font-semibold shadow bg-neutral-800 hover:bg-neutral-900 cursor-pointer"
-          onClick={ ()=> setListOfRestaurent(originallist)}
+          onClick={() => setListOfRestaurants(originalList)}
         >
           Show all
         </button>
       </div>
       <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {ListOfRestaurent.map((r) => 
-          r.promoted ? <RestaurentCarPromoted key={r.id} resData={r} /> : <RestaurentCard key={r.id} resData={r} />
+        {listOfRestaurants.map((r) =>
+          r.promoted ? (
+            <RestaurantCardPromoted key={r.id} resData={r} />
+          ) : (
+            <RestaurantCard key={r.id} resData={r} />
+          )
         )}
       </div>
     </div>

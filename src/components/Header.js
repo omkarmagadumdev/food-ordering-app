@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState,useContext} from "react"
 import { Link } from "react-router-dom"
 import { logo_URL } from "../utils/constants"
-
+import UserContext from "../utils/UserContext" 
 
 const Header = ()=>{
 
 
 const [btnName,setbtnName] = useState("login")
 
-
-
-
+const {loggedInUser} = useContext(UserContext);
   return(
     <div className="sticky top-0 z-10 bg-white/90 backdrop-blur border border-neutral-200 rounded-xl shadow-lg px-6 py-3 flex items-center justify-between  ">
       <div className="h-auto w-auto">
@@ -39,6 +37,7 @@ const [btnName,setbtnName] = useState("login")
           <li>
             <Link className="px-3 py-2 rounded-md text-neutral-700 font-medium hover:text-orange-500 hover:bg-orange-50" to="/cart">Cart</Link>
           </li>
+          
           <button
             onClick={()=>{
               btnName === "login" ? setbtnName("logout") : setbtnName("login")
@@ -47,6 +46,9 @@ const [btnName,setbtnName] = useState("login")
           >
             {btnName}
           </button>
+           <li>
+            <Link className="px-3 py-2 rounded-md text-neutral-700 font-medium hover:text-orange-500 hover:bg-orange-50" to="/cart">{loggedInUser}</Link>
+          </li>
         </ul>
       </div>  
     </div>

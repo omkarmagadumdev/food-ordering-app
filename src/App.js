@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import Shimmer from "./components/Shimmer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import UserContext from "./utils/UserContext";
 
 
 
@@ -15,8 +16,13 @@ const RestaurantMenu = lazy(()=>import('./components/RestaurantMenu'))
 
 const AppLayout = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const[userInfo,setuserInfo] = useState()
 
   useEffect(() => {
+    const data = {
+      name:""
+    }
+    setuserInfo(data.name)
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
@@ -30,7 +36,9 @@ const AppLayout = () => {
   }, []);
 
   return (
-    <div className="max-w-300 mx-auto px-6 pb-8">
+  
+   <UserContext.Provider value={{loggedInUser:userInfo , setuserInfo}}>
+     <div className="max-w-300 mx-auto px-6 pb-8">
       {/* Online Status Indicator */}
       <div className="fixed top-4 right-4 z-50">
         <div className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg ${
@@ -49,6 +57,7 @@ const AppLayout = () => {
       <Header />
       <Outlet />
     </div>
+   </UserContext.Provider>
   );
 };
 

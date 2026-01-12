@@ -1,6 +1,9 @@
 import RestaurantCard, { withPromotedlabel } from "./RestaurantCard";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 import Shimmer from "./Shimmer";
+import UserContext from "../utils/UserContext";
+
+
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -8,7 +11,6 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   const RestaurantCardPromoted = withPromotedlabel(RestaurantCard);
 
   useEffect(() => {
@@ -58,6 +60,7 @@ const Body = () => {
     }
   };
 
+  const { loggedInUser: username = "", setuserInfo = () => {} } = useContext(UserContext);
   // Memoized filtered results based on search text
   const filteredRestaurants = useMemo(() => {
     if (!searchText.trim()) return listOfRestaurants;
@@ -144,6 +147,16 @@ const Body = () => {
         >
           Show All
         </button>
+        
+        <div>
+        <input
+          type="text"
+          placeholder="Username"
+          className="border border-black p-2"
+          value={username}
+          onChange={(e) => setuserInfo(e.target.value)}
+        />
+        </div>
       </div>
       <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {filteredRestaurants.map((r) =>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import RestaurantMenuCard from "./RestaurantMenuCard";
+import { restaurantMenuData } from "../utils/mockData";
 
 
 const RestaurantMenu = () => {
@@ -10,18 +11,111 @@ const RestaurantMenu = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [resId]);
 
-    const fetchData = async () => {
+    const fetchData = () => {
+        // Use mock data - cycle through available menus based on resId
+        const mockDataKeys = Object.keys(restaurantMenuData);
+        const index = (parseInt(resId) % mockDataKeys.length);
+        const mockDataKey = mockDataKeys[index];
+        const mockData = restaurantMenuData[mockDataKey];
+        
+        if (mockData) {
+            // Format mock data to match the expected structure
+            const formattedData = {
+                name: mockData.name,
+                avgRating: mockData.avgRating,
+                totalRatingsString: mockData.totalRatingsString,
+                costForTwoMessage: mockData.costForTwoMessage,
+                cuisines: mockData.cuisines,
+                cards: [
+                    {},
+                    {},
+                    {
+                        card: {
+                            card: {
+                                info: {
+                                    name: mockData.name,
+                                    avgRating: mockData.avgRating,
+                                    totalRatingsString: mockData.totalRatingsString,
+                                    costForTwoMessage: mockData.costForTwoMessage,
+                                    cuisines: mockData.cuisines
+                                }
+                            }
+                        }
+                    },
+                    {},
+                    {
+                        groupedCard: {
+                            cardGroupMap: {
+                                REGULAR: {
+                                    cards: mockData.categories.map((category) => ({
+                                        card: {
+                                            card: {
+                                                title: category.title,
+                                                itemCards: category.itemCards
+                                            }
+                                        }
+                                    }))
+                                }
+                            }
+                        }
+                    }
+                ]
+            };
+            setresInfo(formattedData);
+        }
+    };
+
+    const fetchFromSwiggyAPI = async () => {
         try {
             const data = await fetch(
-                `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9254533&lng=77.546757&restaurantId=576474&catalog_qa=undefined&query=Biryani&submitAction=ENTER${resId}`
+                `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9254533&lng=77.546757&restaurantId=${resId}&catalog_qa=undefined&submitAction=ENTER`
             );
-            console.log(data)
             const json = await data.json();
             setresInfo(json.data);
         } catch (error) {
             console.error("Error fetching menu:", error);
+            // Use fallback mock data on error
+            const mockDataKeys = Object.keys(restaurantMenuData);
+            const index = (parseInt(resId) % mockDataKeys.length);
+            const mockData = restaurantMenuData[mockDataKeys[index]];
+            setresInfo({
+                cards: [
+                    {},
+                    {},
+                    {
+                        card: {
+                            card: {
+                                info: {
+                                    name: mockData.name,
+                                    avgRating: mockData.avgRating,
+                                    totalRatingsString: mockData.totalRatingsString,
+                                    costForTwoMessage: mockData.costForTwoMessage,
+                                    cuisines: mockData.cuisines
+                                }
+                            }
+                        }
+                    },
+                    {},
+                    {
+                        groupedCard: {
+                            cardGroupMap: {
+                                REGULAR: {
+                                    cards: mockData.categories.map((category) => ({
+                                        card: {
+                                            card: {
+                                                title: category.title,
+                                                itemCards: category.itemCards
+                                            }
+                                        }
+                                    }))
+                                }
+                            }
+                        }
+                    }
+                ]
+            });
         }
     };
 
@@ -33,6 +127,7 @@ const RestaurantMenu = () => {
     const categories =
         resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
             (c) =>
+                c.card?.card?.title ||
                 c.card?.card?.["@type"] ===
                 "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
         ) || [];

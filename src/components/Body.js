@@ -16,7 +16,7 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  
   // Fetch restaurants data from Swiggy API
   const fetchData = async () => {
     try {

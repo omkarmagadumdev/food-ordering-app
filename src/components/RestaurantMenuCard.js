@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { CDN_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItems,clearItems,removeItems } from "../utils/cartSlice";
 
 const RestaurantMenuCard = ({ category }) => {
+  const dispatch = useDispatch();
   const [expandedItems, setExpandedItems] = useState({});
   const [isExpanded, setIsExpanded] = useState(true);
+
 
   if (!category || !category.itemCards || category.itemCards.length === 0) {
     return null;
   }
 
   const handleAddItem = (itemId, itemName) => {
+
+    dispatch(addItems(itemName))
+
+
+
     // Show feedback that item was added
     setExpandedItems(prev => ({
       ...prev,
@@ -18,6 +27,7 @@ const RestaurantMenuCard = ({ category }) => {
     
     // Optional: Show a toast/alert
     console.log(`Added ${itemName} to cart`);
+    console.log(`Added ${itemId} to cart`);
     
     // Reset after 1 second
     setTimeout(() => {
@@ -97,14 +107,14 @@ const RestaurantMenuCard = ({ category }) => {
                       className="w-32 h-32 object-cover rounded-lg"
                     />
                     <button 
-                      onClick={() => handleAddItem(itemInfo.id, itemInfo.name)}
+                      onClick={() => handleAddItem(itemInfo.id, itemInfo.name)} 
                       className={`absolute -bottom-2 left-1/2 -translate-x-1/2 px-6 py-1.5 font-bold text-sm rounded-md shadow-md border transition-all ${
                         expandedItems[itemInfo.id]
                           ? 'bg-green-500 text-white border-green-500'
                           : 'bg-white text-green-600 border-neutral-200 hover:bg-neutral-50'
                       }`}
                     >
-                      {expandedItems[itemInfo.id] ? '✓ ADDED' : 'ADD'}
+                      {expandedItems[itemInfo.id] ? '✓ ADDED' : 'ADD+'}
                     </button>
                   </div>
                 )}

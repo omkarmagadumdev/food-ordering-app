@@ -5,6 +5,8 @@ import Body from "./components/Body";
 import Shimmer from "./components/Shimmer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
 
 
 
@@ -100,4 +102,8 @@ const appRouter = createBrowserRouter([
 
 
 const root = createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter} />);
+root.render(
+  <Provider store={appStore}>
+    <RouterProvider router={appRouter} />
+  </Provider>
+);

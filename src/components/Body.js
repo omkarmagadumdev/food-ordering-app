@@ -74,12 +74,12 @@ const Body = () => {
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-red-600 mb-2">Error</h2>
-          <p className="text-neutral-600">{error}</p>
+        <div className="text-center bg-red-50 border border-red-200 rounded-2xl p-8 shadow-lg">
+          <h2 className="text-3xl font-bold text-red-600 mb-2">⚠️ Error</h2>
+          <p className="text-neutral-600 mb-4">{error}</p>
           <button
             onClick={fetchData}
-            className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
+            className="mt-4 px-6 py-3 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition-colors"
           >
             Try Again
           </button>
@@ -111,62 +111,80 @@ const Body = () => {
 
 
   return (
-    <div className="max-w-300 mx-auto px-6 pb-8">
-      <div className="mt-5 flex items-center gap-3 bg-white border border-neutral-200 rounded-xl shadow px-4 py-3">
-        <input
-          type="text"
-          className="flex-1 px-3 py-2 border border-neutral-200 rounded-md text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          placeholder="Search restaurants..."
-        />
-        <button
-          className="px-5 py-2 rounded-md text-white font-semibold shadow bg-orange-500 hover:bg-orange-600 cursor-pointer transition-colors"
-          onClick={handleSearch}
-        >
-          Search
-        </button>
-      </div>
-      <div className="mt-4 flex flex-wrap gap-3">
-        <button
-          className="px-4 py-2 rounded-md text-white font-semibold shadow bg-orange-500 hover:bg-orange-600 cursor-pointer transition-colors"
-          onClick={() => handleFilterByRating(4.3)}
-        >
-          Top Rated
-        </button>
-        <button
-          className="px-4 py-2 rounded-md text-white font-semibold shadow bg-red-500 hover:bg-red-600 cursor-pointer transition-colors"
-          onClick={handleFilterLowestRated}
-        >
-          Lowest Rated
-        </button>
-        <button
-          className="px-4 py-2 rounded-md text-white font-semibold shadow bg-neutral-800 hover:bg-neutral-900 cursor-pointer transition-colors"
-          onClick={handleShowAll}
-        >
-          Show All
-        </button>
-        
-        <div>
-        <input
-          type="text"
-          placeholder="Username"
-          className="border border-black p-2"
-          value={username}
-          onChange={(e) => setuserInfo(e.target.value)}
-        />
+    <div className="mt-8">
+      {/* Search and Filter Section */}
+      <div className="p-8 bg-linear-to-r from-orange-50 to-red-50 border border-orange-200 rounded-2xl shadow-lg mb-8 sticky top-20 z-20">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-neutral-900 mb-4">Find Your Favorite Restaurant</h2>
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex-1 min-w-62.5 relative">
+              <input
+                type="text"
+                placeholder="🔍 Search restaurants, cuisines..."
+                className="w-full px-5 py-3 border-2 border-orange-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 shadow-sm"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </div>
+            <button
+              onClick={() => setSearchText("")}
+              className="px-6 py-3 bg-white text-orange-600 border-2 border-orange-300 rounded-xl font-semibold hover:bg-orange-50 cursor-pointer transition-all duration-200 transform hover:scale-105"
+            >
+              ✕ Clear
+            </button>
+            <button
+              onClick={() => {
+                const sorted = [...listOfRestaurants].sort(
+                  (a, b) => b.rating - a.rating
+                );
+                setListOfRestaurants(sorted);
+              }}
+              className="px-6 py-3 bg-linear-to-r from-blue-500 to-blue-600 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 cursor-pointer transition-all duration-200 transform hover:scale-105 shadow-md"
+            >
+              ⭐ Top Rated
+            </button>
+          </div>
+          
+          {/* Username Input */}
+          <div className="mt-4 flex items-center gap-2">
+            <label className="text-sm font-semibold text-neutral-700">User:</label>
+            <input
+              type="text"
+              placeholder="Enter your name"
+              className="px-4 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+              value={username}
+              onChange={(e) => setuserInfo(e.target.value)}
+            />
+          </div>
         </div>
       </div>
-      <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {filteredRestaurants.map((r) =>
-          r.promoted ? (
-            <RestaurantCardPromoted key={r.id} resData={r} />
-          ) : (
-            <RestaurantCard key={r.id} resData={r} />
-          )
-        )}
-      </div>
+
+      {/* Restaurants Grid */}
+      {filteredRestaurants.length === 0 ? (
+        <div className="text-center py-20">
+          <h3 className="text-3xl mb-3">🔍</h3>
+          <p className="text-xl text-neutral-600 font-medium">No restaurants found matching "{searchText}"</p>
+          <button
+            onClick={() => setSearchText("")}
+            className="mt-4 px-6 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition-colors"
+          >
+            View All
+          </button>
+        </div>
+      ) : (
+        <div>
+          <p className="text-neutral-600 mb-6 font-medium">Showing {filteredRestaurants.length} restaurants</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-max">
+            {filteredRestaurants.map((res) => (
+              res.promoted ? (
+                <RestaurantCardPromoted key={res.id} resData={res} />
+              ) : (
+                <RestaurantCard key={res.id} resData={res} />
+              )
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom"
 import "@testing-library/jest-dom"
 it("Should render header component with login button",()=>{
     render(
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         
         <Provider store={appStore}>
 
@@ -22,7 +22,7 @@ it("Should render header component with login button",()=>{
 })
 it("Should render header component with cart items 0 ",()=>{
     render(
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         
         <Provider store={appStore}>
 
@@ -39,7 +39,7 @@ it("Should render header component with cart items 0 ",()=>{
 
 it("Should render header component with cart items ",()=>{
     render(
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         
         <Provider store={appStore}>
 
@@ -56,7 +56,7 @@ it("Should render header component with cart items ",()=>{
 
 it("Should chnage login button to logoout on click  ",()=>{
     render(
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         
         <Provider store={appStore}>
 

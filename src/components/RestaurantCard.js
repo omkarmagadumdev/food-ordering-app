@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const RestaurentCard = (props) => {
   const { resData } = props;
-  
+  console.log(resData)
   return (
     <Link to={`/restaurant/${resData?.id}`} className="bg-white border border-neutral-200 rounded-2xl shadow-md p-4 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-orange-300 block overflow-hidden">
       <div className="w-full h-48 rounded-xl overflow-hidden bg-neutral-100 mb-3 relative group">
